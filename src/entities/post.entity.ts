@@ -29,4 +29,5 @@ export class Posts implements IPost {
   updated_at: Date;
   @Column("integer", { name: "user_id" })
   user_id: number;
+  teacher: string
 }

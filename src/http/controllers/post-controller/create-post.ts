@@ -30,8 +30,9 @@ export const createPostController = async (req: Request, res: Response) => {
         "Usuário não tem permissão para criar postagens"
       );
     }
+    const newPost = {...postSchema, teacher: user.username}
     const createPostUseCase = makeCreatePostUseCase();
-    await createPostUseCase.createPostUseCase(postSchema);
+    await createPostUseCase.createPostUseCase(newPost);
     return res.status(201).json({ success: "Post criado com sucesso" });
   } catch (error) {
     if (error instanceof ErrorHandler) {
