@@ -9,7 +9,7 @@ export const updatedpostByIdPostController = async (
   res: Response
 ) => {
   const postId = Number(req.params.id);
-  const { title, description, subject, content, user_id } = req.body;
+  const { title, description, subject, content, user_id, teacher } = req.body;
 
   const postUpdateSchema = {
     id: postId ? Number(postId) : undefined,
@@ -19,6 +19,7 @@ export const updatedpostByIdPostController = async (
     subject: subject ? String(subject) : undefined,
     updated_at: new Date(),
     user_id: Number(user_id),
+    teacher: teacher ? String(teacher) : undefined
   };
 
   try {

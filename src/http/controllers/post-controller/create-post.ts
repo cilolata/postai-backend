@@ -3,6 +3,7 @@ import { makeCreatePostUseCase } from "../../../use-cases/factory/make-create-po
 import { EPermission } from "../../../entities/models/user.interface";
 import { ErrorHandler } from "../../../middlewares/errorHandlers";
 import { makeFindUserUseCase } from "../../../use-cases/factory/make-find-user-user-case";
+import { makeFindUserUseByIdCase } from "../../../use-cases/factory/make-find-user-by-id";
 
 export const createPostController = async (req: Request, res: Response) => {
   const { title, description, subject, content, user_id } = req.body;
@@ -17,8 +18,8 @@ export const createPostController = async (req: Request, res: Response) => {
   };
 
   try {
-    const findUserPermission = makeFindUserUseCase();
-    const user = await findUserPermission.findUserUseCase(user_id);
+    const findUserPermission = makeFindUserUseByIdCase();
+    const user = await findUserPermission.findUserByIdUseCase(user_id);
 
     if (!user) {
       throw new ErrorHandler(404, "Usuário nao encontrado");
@@ -31,7 +32,6 @@ export const createPostController = async (req: Request, res: Response) => {
       );
     }
     const newPost = {...postSchema, teacher: user.username}
-    console.log(newPost)
     const createPostUseCase = makeCreatePostUseCase();
     await createPostUseCase.createPostUseCase(newPost);
     return res.status(201).json({ success: "Post criado com sucesso" });
