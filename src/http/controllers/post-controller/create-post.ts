@@ -31,6 +31,7 @@ export const createPostController = async (req: Request, res: Response) => {
       );
     }
     const newPost = {...postSchema, teacher: user.username}
+    console.log(newPost)
     const createPostUseCase = makeCreatePostUseCase();
     await createPostUseCase.createPostUseCase(newPost);
     return res.status(201).json({ success: "Post criado com sucesso" });

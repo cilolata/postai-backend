@@ -19,4 +19,5 @@ export interface IPostUpdate {
   created_at?: Date;
   updated_at?: Date | string;
   user_id?: number;
+  teacher?: string
 }
