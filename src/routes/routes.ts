@@ -8,6 +8,7 @@ import { FindPostByIdPostController } from "../http/controllers/post-controller/
 import { updatedpostByIdPostController } from "../http/controllers/post-controller/update.post";
 import { findAllUsersController } from "../http/controllers/user-controller/find-all-users";
 import { deleteUserByIdController } from "../http/controllers/user-controller/delete-user";
+import { updatedUserController } from "../http/controllers/user-controller/update-user";
 
 const router = Router();
 
@@ -15,7 +16,7 @@ const router = Router();
 router.post("/cadastrar", createUserController);
 router.get("/users", findAllUsersController);
 router.post("/login", findUsersController);
-router.put("/user/:id", findUsersController);
+router.put("/user/:id", updatedUserController);
 router.delete("/user/:id", deleteUserByIdController);
 
 // Posts
