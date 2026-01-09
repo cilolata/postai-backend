@@ -6,10 +6,12 @@ export interface IUserRepository {
   findUserRepository({
     username,
     email,
-    password
+    password,
   }: {
     username: string;
     email?: string;
     password: string;
   }): Promise<IUser | undefined>;
+  updateUserRepository(user: IUserUpdate): Promise<IUserUpdate | undefined>;
+  deleteUserRepository(userId: number): Promise<void>;
 }

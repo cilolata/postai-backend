@@ -45,4 +45,32 @@ export class UserRepository implements IUserRepository {
 
     return userId ? userId : undefined;
   }
+
+  async updateUserRepository(
+    user: IUserUpdate,
+  ): Promise<IUserUpdate | undefined> {
+    if (!user.id) {
+      throw new Error("Usuário não encontrado");
+    }
+
+    const prevUserValues = await this.repository.findOne({
+      where: { id: user.id },
+    });
+
+    if (!prevUserValues) {
+      return undefined;
+    }
+
+    const mergedUser = {
+      ...prevUserValues,
+      ...user,
+    };
+
+    await this.repository.update(user.id, mergedUser);
+    return mergedUser;
+  }
+
+  async deleteUserRepository(userId: number): Promise<void> {
+    await this.repository.delete(userId);
+  }
 }
