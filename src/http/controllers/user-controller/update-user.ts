@@ -20,10 +20,10 @@ export const updatedUserController = async (
   
     try {
         const findUserUseCase = makeUpdateUserUseCase();
-        const post = await findUserUseCase.updateUserUseCase(userSchema);
+        const user = await findUserUseCase.updateUserUseCase(userSchema);
   
-      if (!post) {
-        throw new ErrorHandler(404, "Post nao encontrado");
+      if (!user) {
+        throw new ErrorHandler(404, "Usuário nao encontrado");
       }
       res.status(200).json({ message: "Usuário atualizado com sucesso" });
     } catch (error) {
