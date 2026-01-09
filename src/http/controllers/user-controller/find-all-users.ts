@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ErrorHandler } from "../../../middlewares/errorHandlers";
-import { makeFindUserUseCase } from "../../../use-cases/factory/make-find-user-user-case";
+import { makeFindAllUsersUseCase } from "../../../use-cases/factory/make-find-all-users";
 
 export const findAllUsersController = async (req: Request, res: Response) => {
   const { page, limit, search } = req.query;
@@ -13,7 +13,7 @@ export const findAllUsersController = async (req: Request, res: Response) => {
 
   try {
     const findAllUserUseCase = makeFindAllUsersUseCase();
-    const users = await findAllPostsUseCase.findAllUsersUseCase(
+    const users = await findAllUserUseCase.findAllUsersUseCase(
       registerQuerySchema.page,
       registerQuerySchema.limit,
       registerQuerySchema.search,
@@ -22,7 +22,7 @@ export const findAllUsersController = async (req: Request, res: Response) => {
     if (!users) {
       throw new ErrorHandler(404, "Posts nao encontrado");
     }
-    res.status(200).json({ posts });
+    res.status(200).json({ users });
   } catch (error) {
     if (error instanceof ErrorHandler) {
       throw error;

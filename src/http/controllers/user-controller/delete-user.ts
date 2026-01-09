@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ErrorHandler } from "../../../middlewares/errorHandlers";
+import { makeDeleteUserByIdUseCase } from "../../../use-cases/factory/make-delete-user";
 
 export const deleteUserByIdController = async (req: Request, res: Response) => {
   const userId = Number(req.params.id);
@@ -10,8 +11,8 @@ export const deleteUserByIdController = async (req: Request, res: Response) => {
 
   try {
     const deleteUsertUseCase = makeDeleteUserByIdUseCase();
-    const user = await deleteUserUseCase.deletePostUseCase(postId);
-    res.status(200).json({ message: "Usuário deletado com sucesso", post });
+    const user = await deleteUsertUseCase.deleteUserUseCase(userId);
+    res.status(200).json({ message: "Usuário deletado com sucesso", user });
   } catch (error) {
     if (error instanceof ErrorHandler) {
       throw error;

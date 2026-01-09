@@ -1,7 +1,7 @@
 import { IUserRepository } from "../user.repository.interface";
 import { AppDataSource } from "../../lib/typeorm/typeorm";
-import { Repository } from "typeorm";
-import { IUser } from "../../entities/models/user.interface";
+import { ILike, Repository } from "typeorm";
+import { IUser, IUserUpdate } from "../../entities/models/user.interface";
 import { Users } from "../../entities/user.entity";
 
 export class UserRepository implements IUserRepository {
@@ -44,6 +44,29 @@ export class UserRepository implements IUserRepository {
     });
 
     return userId ? userId : undefined;
+  }
+
+  async findAllUsersRepository(
+    page: number,
+    limit: number,
+    search?: string
+  ): Promise<IUser[]> {
+    const params = {
+      skip: (page - 1) * limit,
+      take: limit,
+    };
+
+    if (search) {
+      return await this.repository.find({
+        ...params,
+        where: [
+          { username: ILike(`%${search}%`) },
+          { email: ILike(`%${search}%`) },
+        ],
+      });
+    }
+
+    return await this.repository.find(params);
   }
 
   async updateUserRepository(
