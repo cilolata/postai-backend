@@ -7,9 +7,6 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_KEY as string;
 
-// Criando cliente Supabase (opcional, caso queira usar depois)
-const database = createClient(supabaseUrl, supabaseKey);
-
 // Configuração principal do DataSource
 export const AppDataSource = new DataSource({
   type: "postgres",

@@ -1,4 +1,20 @@
-import app from "./app";
 
+import "reflect-metadata";
+import "dotenv/config";
+import "./lib/typeorm/typeorm";
 
-app.listen(3000, () => "server running on port 3000");
+import express from "express";
+import { router } from "./routes/routes";
+import { handleError } from "./middlewares/errorHandlers";
+import swaggerUi from "swagger-ui-express";
+import specs from "./config/swagger";
+import cors from "cors";
+
+const app = express();
+app.use(express.json());
+app.use("/postai", swaggerUi.serve, swaggerUi.setup(specs));
+app.use(cors());
+app.use(router);
+app.use(handleError);
+
+app.listen(3000, () => console.log("server running on port 3000"));
