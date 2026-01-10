@@ -54,6 +54,6 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui": "^5.27.1",
     "swagger-ui-express": "^5.0.1",
-    "typeorm": "^0.3.25"
+    "typeorm": "^0.3.28"
   }
 }
