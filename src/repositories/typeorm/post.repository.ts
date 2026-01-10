@@ -51,7 +51,7 @@ export class PostRepository implements IPostRepository {
     return post ?? undefined;
   }
 
-  async updatePostRepository(post: IPostUpdate): Promise<IPostUpdate | undefined> {
+  async updatePostRepository(post: IPostUpdate): Promise<IPost[] | undefined> {
     if (!post.id) {
       throw new Error("Post não encontrado");
     }
@@ -69,11 +69,23 @@ export class PostRepository implements IPostRepository {
       ...post,
     };
 
+    const params = {
+      take: 10,
+    };
+
     await this.repository.update(post.id, mergedPost);
-    return mergedPost;
+    const posts = await this.repository.find(params)
+    return  posts || undefined;
   }
 
-  async deletePostRepository(postId: number): Promise<void> {
-    await this.repository.delete(postId);
+  async deletePostRepository(postId: number): Promise<IPost[] | undefined> {
+    const response = await this.repository.delete(postId);
+
+    const params = {
+      take: 10,
+    };
+
+    const posts = await this.repository.find(params)
+    return  posts || undefined;
   }
 }

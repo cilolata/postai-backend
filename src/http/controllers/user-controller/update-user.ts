@@ -1,36 +1,28 @@
 import { Request, Response } from "express";
-import { makeFindUserUseCase } from "../../../use-cases/factory/make-find-user-user-case";
 import { makeUpdateUserUseCase } from "../../../use-cases/factory/make-update-user";
 import { ErrorHandler } from "../../../middlewares/errorHandlers";
+import { removeUndefinedValues } from "../../../utils";
 
-export const updatedUserController = async (
-    req: Request,
-    res: Response
-  ) => {
-    const userId = Number(req.params.id);
-    const { username, password, email } = req.body;
+export const updatedUserController = async (req: Request, res: Response) => {
+  const userId = Number(req.params.id);
+  const { username, password, email } = req.body;
 
-    const userSchema = {
-      id: userId,
-      username: String(username),
-      password: String(password),
-      email: String(email) ?? undefined,
-    };
-  
-  
-    try {
-        const findUserUseCase = makeUpdateUserUseCase();
-        const user = await findUserUseCase.updateUserUseCase(userSchema);
-  
-      if (!user) {
-        throw new ErrorHandler(404, "Usuário nao encontrado");
-      }
-      res.status(200).json({ message: "Usuário atualizado com sucesso" });
-    } catch (error) {
-      if (error instanceof ErrorHandler) {
-        throw error;
-      }
-      throw new ErrorHandler(500, "Erro ao conectar servidor");
-    }
+  const userSchema = {
+    id: userId,
+    username: username ?  String(username) : undefined,
+    password: password ?  String(password) : undefined,
+    email: email ? String(email) : email,
   };
-  
+
+  try {
+    const values = removeUndefinedValues(userSchema);
+    const findUserUseCase = makeUpdateUserUseCase();
+    const users = await findUserUseCase.updateUserUseCase(userSchema);
+    res.status(200).json({ users });
+  } catch (error) {
+    if (error instanceof ErrorHandler) {
+      throw error;
+    }
+    throw new ErrorHandler(500, "Erro ao conectar servidor");
+  }
+};

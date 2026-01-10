@@ -4,6 +4,6 @@ export interface IPostRepository {
     createPostRepository(post: IPost): Promise<IPost | undefined>;
     findAllPostsRepository(upage: number, limit: number, search?: string): Promise<IPost[] | []>;
     findPostByIdRepository(postId: number): Promise<IPost | undefined>;
-    updatePostRepository(post: IPostUpdate): Promise<IPostUpdate | undefined>;
-    deletePostRepository(postId: number): Promise<void>;
+    updatePostRepository(post: IPostUpdate): Promise<IPost[] | undefined>;
+    deletePostRepository(postId: number): Promise<IPost[] | undefined>;
 }

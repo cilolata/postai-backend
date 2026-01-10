@@ -1,7 +1,11 @@
 import { IUserRepository } from "../user.repository.interface";
 import { AppDataSource } from "../../lib/typeorm/typeorm";
-import { ILike, Repository } from "typeorm";
-import { IUser, IUserUpdate } from "../../entities/models/user.interface";
+import { ILike, Not, Repository } from "typeorm";
+import {
+  EPermission,
+  IUser,
+  IUserUpdate,
+} from "../../entities/models/user.interface";
 import { Users } from "../../entities/user.entity";
 
 export class UserRepository implements IUserRepository {
@@ -12,6 +16,9 @@ export class UserRepository implements IUserRepository {
   }
 
   async createUserRepository(user: IUser): Promise<IUser> {
+    if (user?.permission_type === EPermission.ADMIN) {
+      throw new Error("Erro ao criar usuário");
+    }
     return await this.repository.save(user);
   }
 
@@ -51,6 +58,7 @@ export class UserRepository implements IUserRepository {
     limit: number,
     search?: string
   ): Promise<IUser[]> {
+    
     const params = {
       skip: (page - 1) * limit,
       take: limit,
@@ -66,34 +74,63 @@ export class UserRepository implements IUserRepository {
       });
     }
 
-    return await this.repository.find(params);
+    return await this.repository.find({
+      ...params,
+      where: {
+        permission_type: Not(EPermission.ADMIN)
+      }
+    });
   }
 
-  async updateUserRepository(
-    user: IUserUpdate,
-  ): Promise<IUserUpdate | undefined> {
+  async updateUserRepository(user: IUserUpdate): Promise<IUser[] | undefined> {
     const userId = await this.repository.findOne({
       where: {
-        id: user.id,
+        id: user.id
       },
-    })
+    });
 
-    if (!userId?.id) {
-      throw new Error("Usuário não encontrado");
+    if (userId?.permission_type === EPermission.ADMIN) {
+      throw new Error("Usuario nao pode ser alterado");
     }
 
     const mergedUser = {
-      id: userId.id,
-      username: user.username ?? userId.username,
-      password: user.password ?? userId.password,
-      email: user.email ?? userId.email,
+      id: user.id,
+      username: user.username ?? userId?.username,
+      password: user.password ?? userId?.password,
+      email: user.email ?? userId?.email,
     };
 
-    await this.repository.update(userId.id, mergedUser);
-    return mergedUser;
+    await this.repository.update(mergedUser.id, mergedUser);
+
+    const params = {
+      take: 10,
+    };
+    const users =  await this.repository.find({ 
+      ...params,
+      where: {
+        permission_type: Not(EPermission.ADMIN)
+      }
+    })
+
+    return users || undefined
   }
 
-  async deleteUserRepository(userId: number): Promise<void> {
+  async deleteUserRepository(userId: number): Promise<IUser[] | undefined> {
+    const user = await this.repository.findOne({ where: { id: userId } });
+    if (user?.permission_type === EPermission.ADMIN) {
+      throw new Error("Usuário não pode ser deletado");
+    }
     await this.repository.delete(userId);
+    const params = {
+      take: 10,
+    };
+    const users =  await this.repository.find({ 
+      ...params,
+      where: {
+        permission_type: Not(EPermission.ADMIN)
+      }
+    })
+    return users || undefined
+    
   }
 }

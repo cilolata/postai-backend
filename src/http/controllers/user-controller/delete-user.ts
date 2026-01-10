@@ -5,14 +5,10 @@ import { makeDeleteUserByIdUseCase } from "../../../use-cases/factory/make-delet
 export const deleteUserByIdController = async (req: Request, res: Response) => {
   const userId = Number(req.params.id);
 
-  if (!userId) {
-    throw new ErrorHandler(404, "Usuário nao encontrado");
-  }
-
   try {
     const deleteUsertUseCase = makeDeleteUserByIdUseCase();
-    const user = await deleteUsertUseCase.deleteUserUseCase(userId);
-    res.status(200).json({ message: "Usuário deletado com sucesso", user });
+    const users = await deleteUsertUseCase.deleteUserUseCase(userId);
+    res.status(200).json({ users });
   } catch (error) {
     if (error instanceof ErrorHandler) {
       throw error;

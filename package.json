@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/server.js",
-    "dev": "ts-node-dev src/server.ts",
+    "dev": "nodemon src/server.ts",
     "build": "rimraf dist && tsc",
     "test": "cross-env NODE_ENV=test dotenv -e .env -- jest --coverage",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
@@ -34,7 +34,7 @@
     "express": "^5.1.0",
     "install": "^0.13.0",
     "jest": "^30.0.5",
-    "nodemon": "^3.1.10",
+    "nodemon": "^3.1.11",
     "npm": "^11.4.2",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",

@@ -12,8 +12,8 @@ export interface IUserRepository {
     email?: string;
     password: string;
   }): Promise<IUser | undefined>;
-  updateUserRepository(user: IUserUpdate): Promise<IUserUpdate | undefined>;
-  deleteUserRepository(userId: number): Promise<void>;
+  updateUserRepository(user: IUserUpdate): Promise<IUser[] | undefined>;
+  deleteUserRepository(userId: number): Promise<IUser[] | undefined>;
   findAllUsersRepository(page: number, limit: number, search?: string): Promise<IUser[] | []>;
 
 }

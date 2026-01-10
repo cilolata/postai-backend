@@ -3,6 +3,7 @@ import { EPermission } from "../entities/models/user.interface";
 export const fromDbPermission = (dbPerm: number | string): EPermission => {
   if (+dbPerm === 0) return EPermission.STUDENT;
   if (+dbPerm === 1) return EPermission.TEACHER;
+  if (!dbPerm || dbPerm === "2") return EPermission.ADMIN;
   throw new Error(`Invalid permission code`);
 };
 

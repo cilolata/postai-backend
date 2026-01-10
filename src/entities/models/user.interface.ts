@@ -1,6 +1,7 @@
 export enum EPermission {
   STUDENT = 0,
   TEACHER = 1,
+  ADMIN = 2,
 }
 export interface IUser {
   id?: number;
@@ -11,8 +12,8 @@ export interface IUser {
 }
 
 export interface IUserUpdate {
-  id?: number;
-  username: string;
+  id: number;
+  username?: string;
   email?: string;
-  password: string;
+  password?: string;
 }

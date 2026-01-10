@@ -25,15 +25,10 @@ export const updatedpostByIdPostController = async (
   try {
     const findPostUseCase = makeFindPostByIdUseCase();
     const post = await findPostUseCase.findAllPostsUseCase(postId);
-
-    if (!post) {
-      throw new ErrorHandler(404, "Post nao encontrado");
-    }
-
     const values = removeUndefinedValues(postUpdateSchema);
     const updatePost = makeUpdatePostUseCase();
-    await updatePost.updatePostUseCase(values);
-    res.status(200).json({ message: "Post atualizado com sucesso" });
+    const posts = await updatePost.updatePostUseCase(values);
+    res.status(200).json({ posts });
   } catch (error) {
     if (error instanceof ErrorHandler) {
       throw error;
