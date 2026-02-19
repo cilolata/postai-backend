@@ -20,7 +20,7 @@ router.put("/user/:id", updatedUserController);
 router.delete("/user/:id", deleteUserByIdController);
 
 // Posts
-router.post("/posts", createPostController);
+
 router.get("/posts", findAllPostsController);
 router.get("/posts/:id", FindPostByIdPostController);
 router.put("/posts/:id", updatedpostByIdPostController);

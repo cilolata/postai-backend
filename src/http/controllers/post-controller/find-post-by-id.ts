@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { makeFindPostByIdUseCase } from "../../../use-cases/factory/make-find-post-by-id";
 import { ErrorHandler } from "../../../middlewares/errorHandlers";
 import { makeFindUserUseByIdCase } from "../../../use-cases/factory/make-find-user-by-id";
+import { bucket } from "../../../lib/firebase/firebase";
 
 export const FindPostByIdPostController = async (
   req: Request,
@@ -13,10 +14,17 @@ export const FindPostByIdPostController = async (
     const findPostUseCase = makeFindPostByIdUseCase();
     const findUserByIdUseCase = makeFindUserUseByIdCase();
     const post = await findPostUseCase.findAllPostsUseCase(postId);
-
+  
     if (post?.user_id && post) {
       const user = await findUserByIdUseCase.findUserByIdUseCase(post?.user_id);
-      res.status(200).json({ post, professor: user?.username });
+
+
+      res
+        .status(200)
+        .json({
+          post,
+          professor: user?.username,
+        });
     } else if (post) {
       res.status(200).json({ post });
     } else {

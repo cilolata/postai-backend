@@ -17,6 +17,10 @@ export class Posts implements IPost {
   content: string;
   @Column("varchar")
   subject?: string;
+  @Column("text")
+  url: string;
+  @Column("text")
+  transcription: string;
   @Column({
     type: "timestamp without time zone",
     default: () => "CURRENT_TIMESTAMP",

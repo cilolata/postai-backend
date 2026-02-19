@@ -2,22 +2,13 @@ import { Request, Response } from "express";
 import { makeCreatePostUseCase } from "../../../use-cases/factory/make-create-post-use-case";
 import { EPermission } from "../../../entities/models/user.interface";
 import { ErrorHandler } from "../../../middlewares/errorHandlers";
-import { makeFindUserUseCase } from "../../../use-cases/factory/make-find-user-user-case";
 import { makeFindUserUseByIdCase } from "../../../use-cases/factory/make-find-user-by-id";
+import { UploadService } from "../../../utils/upload";
+import { FILE } from "dns";
 
 export const createPostController = async (req: Request, res: Response) => {
-  const { title, description, subject, content, user_id } = req.body;
-
-  const postSchema = {
-    title: String(title),
-    description: String(description),
-    subject: subject ? String(subject) : undefined,
-    content: String(content),
-    created_at: new Date(),
-    user_id: Number(user_id)
-  };
-
   try {
+    const { user_id, ...rest } = req.body;
     const findUserPermission = makeFindUserUseByIdCase();
     const user = await findUserPermission.findUserByIdUseCase(user_id);
 
@@ -31,9 +22,34 @@ export const createPostController = async (req: Request, res: Response) => {
         "Usuário não tem permissão para criar postagens"
       );
     }
-    const newPost = {...postSchema, teacher: user.username}
-    const createPostUseCase = makeCreatePostUseCase();
-    await createPostUseCase.createPostUseCase(newPost);
+
+    if (req.file) {
+        const videoBuffer = new UploadService(req.file as unknown as Express.Multer.File);
+        const url = await videoBuffer.uploadVideo();
+        const transcription = await videoBuffer.extractAudio();
+
+        const newPost = {
+          ...rest,
+          user_id,
+          teacher: user.username,
+          url,
+          transcription,
+        };
+
+      if(url &&  transcription) {
+      const createPostUseCase = makeCreatePostUseCase();
+      await createPostUseCase.createPostUseCase(newPost);
+      }
+    } else {
+      const newPost = {
+        ...rest,
+        user_id,
+        teacher: user.username,
+      };
+      const createPostUseCase = makeCreatePostUseCase();
+      await createPostUseCase.createPostUseCase(newPost);
+    }
+
     return res.status(201).json({ success: "Post criado com sucesso" });
   } catch (error) {
     if (error instanceof ErrorHandler) {
