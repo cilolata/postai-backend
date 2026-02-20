@@ -1,17 +1,13 @@
 import "dotenv/config";
-const { initializeApp, cert } = require("firebase-admin/app");
-const { getStorage } = require("firebase-admin/storage");
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getStorage } = require('firebase-admin/storage'); 
 
-const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n") as String
-const projectId = process.env.FIREBASE_PROJECT_ID as String
+export const serviceAccount = '/etc/secrets/learned-484621-firebase-adminsdk-fbsvc-bb95384543.json';
 
 export const app = initializeApp({
-  credential: cert({
-    projectId: projectId,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: privateKey,
-  }),
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  credential: cert(serviceAccount),
+  storageBucket: process.env.APP_FIREBASE_STORAGE_BUCKET
 });
 
 export const bucket = getStorage().bucket();
+
