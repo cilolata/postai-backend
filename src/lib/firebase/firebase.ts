@@ -1,12 +1,12 @@
 import "dotenv/config";
-const { initializeApp, credencial } = require("firebase-admin/app");
+const { initializeApp, cert } = require("firebase-admin/app");
 const { getStorage } = require("firebase-admin/storage");
 
 const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n") as String
 const projectId = process.env.FIREBASE_PROJECT_ID as String
 
 export const app = initializeApp({
-  credential: credencial.cert({
+  credential: cert({
     projectId: projectId,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     privateKey: privateKey,
