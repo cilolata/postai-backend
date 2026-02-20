@@ -10,7 +10,7 @@ export class UploadService {
 
   async uploadVideo(): Promise<string> {
     if (!this.file) return "";
-    const fileName = Date.now() + "_" + this.file.originalname;
+    const fileName = Date.now() + "_" + (this.file.originalname ?? 'video');
     const firebaseFile = bucket.file(fileName);
 
     const stream = firebaseFile.createWriteStream({
@@ -37,7 +37,7 @@ export class UploadService {
   async extractAudio(): Promise<string | undefined> {
     try {
       if (!this.file) return "";
-      const name = this.file.originalname.split(".")[0];
+      const name = this.file.originalname.split(".")[0] ?? Date.now() + "_" + 'video';
       const firebaseFile = bucket.file(`audio/${name}.mp3`);
 
       const audioBucket = firebaseFile.createWriteStream({
