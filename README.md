@@ -22,7 +22,7 @@ Este é o segundo projeto do curso FullStack - Fiap. Nele executamos a criaçao 
 
 permission_type: PROFESSOR = 1 , ALUNO = 0
 
-![supabase-schema-bymytsaevbrbdojeevty](https://github.com/user-attachments/assets/7924ab92-20ca-4477-915a-1754c48f79f6)
+<img width="833" height="514" alt="Screenshot 2026-02-19 at 21 49 55" src="https://github.com/user-attachments/assets/0ca4ccda-7e31-4798-ab0e-3da337f42ca2" />
 
 ## Rotas
 
