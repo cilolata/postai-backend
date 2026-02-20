@@ -57,8 +57,8 @@ Professores / Alunos
 
 ## Setup inicial
 
-- npm run install
-- npm run start
+- npm run install/yarn 
+- npm run start /yarn dev
 
 ## publicação da imagem dockerhub
 
@@ -70,6 +70,31 @@ SUPABASE_URL=
 SUPABASE_KEY=
 <br>
 DB_PORT=
+<br>
+FIREBASE_TYPE=
+<br>
+FIREBASE_PROJECT_ID=
+<br>
+FIREBASE_PRIVATE_KEY_ID=
+<br>
+FIREBASE_PRIVETE_KEY=
+<br>
+FIREBASE_CLIENT_EMAIL=
+<br>
+FIREBASE_CILENT_ID="117886016804852036312"
+<br>
+FIREBASE_AUTH_URI=
+<br>
+FIREBASE_TOKEN_URI=
+<br>
+FIREBASE_AUTH_PROVIDER_X509_CERT_URL=
+<br>
+FIREBASE_CLIENT_X509_CERT_URL=
+<br>
+FIREBASE_UNIVERSE_DOMAIN=
+<br>
+FIREBASE_STORAGE_BUCKET=
+<br>
 
 ## Swagger
 
