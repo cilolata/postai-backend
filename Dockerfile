@@ -4,18 +4,13 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-ARG SUPABASE_URL
-ARG SUPABASE_KEY
-
-ENV SUPABASE_URL=${SUPABASE_URL}
-ENV SUPABASE_KEY=${SUPABASE_KEY}
-ENV PORT=5432
-
 RUN npm run build
+
+ENV PORT=3000
 
 EXPOSE 3000
 
