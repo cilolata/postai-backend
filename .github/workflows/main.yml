@@ -13,17 +13,7 @@ jobs:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      FIREBASE_TYPE: ${{ secrets.FIREBASE_TYPE }}
-      FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
-      FIREBASE_PRIVETE_KEY: ${{ secrets.FIREBASE_PRIVETE_KEY }}
-      FIREBASE_CILENT_ID: ${{ secrets.FIREBASE_CILENT_ID }}
-      FIREBASE_AUTH_URI: ${{ secrets.FIREBASE_AUTH_UR }}
-      FIREBASE_TOKEN_URI: ${{ secrets.FIREBASE_TOKEN_URI }}
-      FIREBASE_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.FIREBASE_AUTH_PROVIDER_X509_CERT_URL }}
-      FIREBASE_CLIENT_X509_CERT_URL: ${{ secrets.FIREBASE_CLIENT_X509_CERT_URL }}
-      FIREBASE_UNIVERSE_DOMAIN: ${{ secrets.FIREBASE_UNIVERSE_DOMAIN }}
-      FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET}}
-
+      
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
