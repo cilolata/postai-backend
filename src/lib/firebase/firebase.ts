@@ -8,7 +8,7 @@ export const app = initializeApp({
   credential: cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: privateKey,
+    "project_id": privateKey,
   }),
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 });
