@@ -5,10 +5,6 @@
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.io/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com/)
 
-## Projeto
-
-Este é o segundo projeto do curso FullStack - Fiap. Nele executamos a criaçao de uma api para que professores possam compartilhar as aulas e os alunos acessarem. Utilizamos basicamente as ferramentas ensinadas no módulo, como nodejs, typescript, typeorm, postgres, entre outras, e usamos o conceito de SOLID para estruturar a arquitetura. Foi um trabalho desafiador, pois atuamos em outras áreas (frontend e dados), mas conseguimos finalizar o projeto, e já estamos pensando em muitas melhorias. Nós também subimos a aplicação no github actions para integração contínua e fluxo de entrega e a API está publicada no Render. Fizemos a documentação com swagger.
-
 ## Arquitetura
 
 <img width="1232" height="573" alt="Screenshot 2026-02-19 at 22 08 06" src="https://github.com/user-attachments/assets/3273aa0d-d36a-42e2-8209-d3a03b282d81" />
